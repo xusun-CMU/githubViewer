@@ -3,7 +3,7 @@
 
     var main = angular.module('mainView', []);
 
-    var mainController = function ($scope, $http) {
+    var mainController = function ($scope, $http, $anchorScroll, $location) {
 
         window.$scope = $scope;
 
@@ -32,9 +32,12 @@
         $scope.search = function () {
             $http.get("https://api.github.com/users/" + $scope.username)
                 .then(onUserComplete, onUserError);
+            $location.hash('userDetails');
+            $anchorScroll();
         };
     };
 
-    main.controller("mainController", ['$scope', '$http', mainController]);
+    main.controller("mainController", 
+                    ['$scope', '$http', '$anchorScroll', '$location', mainController]);
 
 }());
