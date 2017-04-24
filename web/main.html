@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html ng-app="mainView">
+
+<head>
+    <title>Main Page</title>
+    <script data-require="angular.js@4.0.0" data-semver="4.0.0" src="https://code.angularjs.org/latest/angular.min.js"></script>
+    <script src="/githubViewer/src/main.js"></script>
+</head>
+
+<body ng-controller="mainController">
+    <h1>{{message}}</h1>
+    <div>{{userError}}</div>
+    <div>
+        <form name="searchUser">
+            <input type="text" placeholder="User name to find..." ng-model="username" />
+            <input type="submit" value="Search" ng-click="search()" />
+        </form>
+    </div>
+    <div ng-show="user">
+        <div>
+            <h2>Name: {{user.name}}</h2>
+        </div>
+        <div>
+            <img ng-src="{{user.avatar_url}}" title="{{user.name}}" />
+        </div>
+        <div>
+            Order:
+            <select ng-model="repoSortOrder">
+                <option value="+name">Name</option>
+                <option value="-stargazers_count">Stars</option>
+                <option value="+language">Language</option>
+            </select>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Starts</th>
+                        <th>Language</th>
+                    </tr>
+                </thead>
+                {{reposError}}
+                <tbody>
+                    <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
+                        <td>{{repo.name}}</td>
+                        <td>{{repo.stargazers_count | number}}</td>
+                        <td>{{repo.language}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
